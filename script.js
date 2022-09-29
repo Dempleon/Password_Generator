@@ -16,7 +16,6 @@ var passwordObj = {
   // object attributes
   passLength: 0,
   options: [],
-  password: '',
 
   //object methods
   // sets length of password
@@ -46,6 +45,8 @@ var passwordObj = {
     console.log(this.options);
   },
 
+  
+
   // generate a single character depending on the options chosen
   generateChar: function () {
 
@@ -73,19 +74,25 @@ var passwordObj = {
     }
   },
 
+  // function to generate a random special character
   generateSpecial: function () {
-    // dont include ' " or \ to prevent bugs
-    let specials = " !#$%&()*+,-./:;<=>?@[]^_`{|}~";
+    let specials = " !#$%&()*+,-./:;<=>?@[]^_`{|}~"; // dont include ' " or \ to prevent bugs
     return specials[Math.floor(Math.random() * specials.length)];
   },
+
+  // function to generate a random numeric character
   generateNumeric: function() {
     let numbers = '0123456789';
     return numbers[Math.floor(Math.random() * numbers.length)];
   },
+
+  // function to generate a random upper case character
   generateUppers: function() {
     let uppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return uppers[Math.floor(Math.random() * uppers.length)];
   },
+
+  // function to generate a random lower case character
   generateLowers: function() {
     let lowers = 'abcdefghijklmnopqrstuvwxyz';
     return lowers[Math.floor(Math.random() * lowers.length)];
