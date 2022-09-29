@@ -46,11 +46,11 @@ var passwordObj = {
       alert('You must use atleast one option');
       this.setAttributes();
     }
-    console.log(this.options);
+    // console.log(this.options);
   },
 
   // function to generate the desired passPhrase
-  generatePass: function() {
+  generatePass: function () {
     //Reset previous passPhrase if it exists
     this.passPhrase = '';
 
@@ -61,7 +61,7 @@ var passwordObj = {
     this.setAttributes();
 
     //create the passPhrase
-    for(var x = 0; x < this.passLength; x++) {
+    for (var x = 0; x < this.passLength; x++) {
       this.passPhrase += this.generateChar();
     }
     return this.passPhrase;
@@ -73,57 +73,29 @@ var passwordObj = {
     //choose which options to generate a character for
     //if a chosen option was not confirmed by the user, choose a new random option to generate for
     var x = Math.floor(Math.random() * 4);
-    while(!this.options[x]) {
+    while (!this.options[x]) {
       x = Math.floor(Math.random() * 4);
     }
-    
+
     // generate the corresponding character
     switch (x) {
       case 0: // if special characters are part of the password
-        // return this.generateSpecial();
         let specials = " !#$%&()*+,-./:;<=>?@[]^_`{|}~"; // dont include ' " or \ to prevent bugs
-    return specials[Math.floor(Math.random() * specials.length)];
-        
+        return specials[Math.floor(Math.random() * specials.length)];
+
       case 1: // if numeric characters are part of the password
-        // return this.generateNumeric();
         let numbers = '0123456789';
-    return numbers[Math.floor(Math.random() * numbers.length)];
-      
+        return numbers[Math.floor(Math.random() * numbers.length)];
+
       case 2: // if upper case characters are part of the password
-        // return this.generateUppers();
         let uppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    return uppers[Math.floor(Math.random() * uppers.length)];
-        
+        return uppers[Math.floor(Math.random() * uppers.length)];
+
       case 3: // if lower case characters are part of the password
-        // return this.generateLowers();
         let lowers = 'abcdefghijklmnopqrstuvwxyz';
-    return lowers[Math.floor(Math.random() * lowers.length)];
+        return lowers[Math.floor(Math.random() * lowers.length)];
     }
-  },
-
-  // // function to generate a random special character
-  // generateSpecial: function () {
-  //   let specials = " !#$%&()*+,-./:;<=>?@[]^_`{|}~"; // dont include ' " or \ to prevent bugs
-  //   return specials[Math.floor(Math.random() * specials.length)];
-  // },
-
-  // // function to generate a random numeric character
-  // generateNumeric: function() {
-  //   let numbers = '0123456789';
-  //   return numbers[Math.floor(Math.random() * numbers.length)];
-  // },
-
-  // // function to generate a random upper case character
-  // generateUppers: function() {
-  //   let uppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  //   return uppers[Math.floor(Math.random() * uppers.length)];
-  // },
-
-  // // function to generate a random lower case character
-  // generateLowers: function() {
-  //   let lowers = 'abcdefghijklmnopqrstuvwxyz';
-  //   return lowers[Math.floor(Math.random() * lowers.length)];
-  // }
+  }
 };
 
 function generatePassword() {
