@@ -14,75 +14,100 @@ generateBtn.addEventListener("click", writePassword);
 
 var passwordObj = {
   // object attributes
-  passLength: undefined,
-  specialChars: undefined,
-  numericChars: undefined,
-  upperCase: undefined,
-  lowerCase: undefined,
+  passLength: 0,
+  options: [],
   password: '',
 
   //object methods
-  setLength: function() {
+  // sets length of password
+  setLength: function () {
     this.passLength = prompt('How many characters would you like you password to have?');
     if (this.passLength < 8) {
       alert('Length must be at least 8 characters');
-      setLength();
+      this.setLength();
     }
     if (this.passLength > 128) {
-      alert('Length must not exceet 128 characters');
-      setLength();
+      alert('Length must not exceed 128 characters');
+      this.setLength();
     }
   },
-  setAttributes: function() {
-    this.specialChars = confirm('Click OK to use special characters');
-    this.numericChars = confirm('Click OK to use numeric characters');
-    this.upperCase = confirm('Click OK to use upper case characters');
-    this.lowerCase = confirm('Click OK to use lower case characters');
-    if (!(this.specialChars || this.numericChars || this.upperCase || this.lowerCase)) {
+
+  //sets conditions for the password
+  setAttributes: function () {
+    this.options[0] = confirm('Click OK to use special characters');
+    this.options[1] = confirm('Click OK to use numeric characters');
+    this.options[2] = confirm('Click OK to use upper case characters');
+    this.options[3] = confirm('Click OK to use lower case characters');
+
+    if (!(this.options.includes(true))) {
       alert('You must use atleast one option');
-      setAttributes();
+      this.setAttributes();
+    }
+    console.log(this.options);
+  },
+
+  // generate a single character depending on the options chosen
+  generateChar: function () {
+
+    //choose which options to generate a character for
+    //if a chosen option was not confirmed by the user, choose a new random option to generate for
+    var x = Math.floor(Math.random() * 4);
+    while(!this.options[x]) {
+      x = Math.floor(Math.random() * 4);
+    }
+    
+    // generate the corresponding character
+    switch (x) {
+      case 0: // if special characters are part of the password
+        return this.generateSpecial();
+        
+      case 1: // if numeric characters are part of the password
+        return this.generateNumeric();
+      
+      case 2: // if upper case characters are part of the password
+        return this.generateUppers();
+        
+      case 3: // if lower case characters are part of the password
+        return this.generateLowers();
+        
     }
   },
-  generateChar: function() {
-    return;
+
+  generateSpecial: function () {
+    // dont include ' " or \ to prevent bugs
+    let specials = " !#$%&()*+,-./:;<=>?@[]^_`{|}~";
+    return specials[Math.floor(Math.random() * specials.length)];
+  },
+  generateNumeric: function() {
+    let numbers = '0123456789';
+    return numbers[Math.floor(Math.random() * numbers.length)];
+  },
+  generateUppers: function() {
+    let uppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return uppers[Math.floor(Math.random() * uppers.length)];
+  },
+  generateLowers: function() {
+    let lowers = 'abcdefghijklmnopqrstuvwxyz';
+    return lowers[Math.floor(Math.random() * lowers.length)];
   }
-}
+};
 
 function generatePassword() {
-  // prompt the user for the length of the desired password
-  // password must be over 8 characters long
-  passLength = prompt("How many characters would you like your password to contain?");
-  // check to see if the user input is a number
-  if (isNaN(passLength)) {
-    alert('Not a number');
-    return;
-  } else if (passLength < 8) {
-    alert('password less than 8');
-    return;
-  }  else if (passLength > 128) {
-    alert('password must be less than 128 characters');
-    return;
+  passwordObj.setLength();
+  passwordObj.setAttributes();
+  console.log(passwordObj.useSpecial);
+  console.log(passwordObj.useNum);
+  console.log(passwordObj.useUpper);
+  console.log(passwordObj.useLower);
+  console.log(passwordObj.options);
+  var passw = "";
+  for (var i = 0; i < passwordObj.passLength; i++) {
+    console.log('char' + i);
+    var ch = passwordObj.generateChar();
+    console.log(ch);
+    passw = passw + ch;
+    // console.log(passw);
   }
-  
-  // confirm which password criteria the user wants
-  // add them to an array so we can which which ones are true
-  // var passCriterias = []
-  // var specialChar = confirm('Do you want special characters?');
-  // console.log(specialChar);
-  // passCriterias.push(specialChar);
-  // var numericChar = confirm('Do you want numeric characers?');
-  // console.log(numericChar);
-  // passCriterias.push(numericChar);
-  // var lowerCase = confirm('Do you want lower case characters?');
-  // console.log(lowerCase);
-  // passCriterias.push(lowerCase);
-  // var upperCase = confirm('Do you want upper case characters?');
-  // console.log(upperCase);
-  // passCriterias.push(upperCase)
-
-
-  console.log(passCriterias)
-  // There needs to be atleast 1 kind of criteria selected,
-  // If there isn't atleast 1 criteria chosen, end the function
-
+  console.log('password: ' + passw);
+  return passw;
 }
