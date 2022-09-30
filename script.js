@@ -23,6 +23,10 @@ var passwordObj = {
   // sets length of passPhrase
   setLength: function () {
     this.passLength = prompt('How many characters would you like you password to have?');
+    if(isNaN(this.passLength)) {
+      alert('Please enter a number between 8 and 128');
+      this.setLength();
+    }
     if (this.passLength < 8) {
       alert('Length must be at least 8 characters');
       this.setLength();
